@@ -1,0 +1,8 @@
+transformers
+torch
+tensorflow
+gradio
+pillow
+timm
+fastapi
+requests
