@@ -44,7 +44,7 @@ Follow these steps to set up the application locally:
 #### Clone the Repository
 
 ```bash
-git clone https://github.com/NeerajCodz/ObjectDetection
+git clone https://github.com/NeerajCodz/ObjectDetection.git
 cd ObjectDetection
 ```
 
@@ -136,11 +136,13 @@ The `app.py` script supports the following command-line arguments:
   - Example: `python app.py --enable-fastapi`
 - `--fastapi-port <port>`: Specify the port for the FastAPI server (default: 8000).
   - Example: `python app.py --enable-fastapi --fastapi-port 8001`
+- `--confidence-threshold <float-value)`: Confidence threshold for detection (Range: 0 - 1) (default: 8000).
+  - Example: `python app.py --confidence-threshold 0.75`
 
 You can combine arguments:
 
 ```bash
-python app.py --gradio-port 7870 --enable-fastapi --fastapi-port 8001
+python app.py --gradio-port 7870 --enable-fastapi --fastapi-port 8001 --confidence-threshold 0.75
 ```
 
 Alternatively, set the `GRADIO_SERVER_PORT` environment variable:
@@ -186,16 +188,16 @@ Access the Swagger UI at `http://localhost:8000/docs` for interactive testing.
 #### Using `curl` with an Image URL
 
 ```bash
-curl -X POST "http://localhost:8000/detect" \
-  -H "Content-Type: application/json" \
+curl -X POST "http://localhost:8000/detect" \\
+  -H "Content-Type: application/json" \\
   -d '{"image_url": "https://example.com/image.jpg", "model_name": "facebook/detr-resnet-50"}'
 ```
 
 #### Using `curl` with an Image File
 
 ```bash
-curl -X POST "http://localhost:8000/detect" \
-  -F "file=@/path/to/image.jpg" \
+curl -X POST "http://localhost:8000/detect" \\
+  -F "file=@/path/to/image.jpg" \\
   -F "model_name=facebook/detr-resnet-50"
 ```
 
@@ -226,7 +228,7 @@ To contribute or modify the application:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/NeerajCodz/ObjectDetection
+git clone https://github.com/NeerajCodz/ObjectDetection.git
 cd ObjectDetection
 ```
 
@@ -265,8 +267,10 @@ Please include tests and documentation for new features. Report issues via GitHu
 ## Troubleshooting
 
 - **Port Conflicts**: If port 7860 is in use, specify a different port with `--gradio-port` or set `GRADIO_SERVER_PORT`.
-- **Colab Issues**: Use the `--gradio-port` argument or environment variable to avoid port conflicts in Google Colab.
+  - Example: `python app.py --gradio-port 7870`
+- **Colab Asyncio Error**: If you encounter `RuntimeError: asyncio.run() cannot be called from a running event loop` in Colab, the application now uses `nest_asyncio` to handle this. Ensure `nest_asyncio` is installed (`pip install nest_asyncio`).
 - **Panoptic Model Bugs**: Avoid `detr-resnet-*-panoptic` models until stability issues are resolved.
 - **API Instability**: Test with smaller images and object detection models first.
+- **FastAPI Not Starting**: Ensure `--enable-fastapi` is used, and check that the specified `--fastapi-port` (default: 8000) is available.
 
 For further assistance, open an issue on the [GitHub repository](https://github.com/NeerajCodz/ObjectDetection).

@@ -6,3 +6,6 @@ pillow
 timm
 fastapi
 requests
+uvicorn 
+pandas 
+nest_asyncio
