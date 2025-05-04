@@ -4,4 +4,4 @@ app_file: app.py
 title: Object Detection App
 subtitle: Real-time object detection in images using Gradio
 hardware: cpu-basic
-license: apache-2.0
+license: mit
