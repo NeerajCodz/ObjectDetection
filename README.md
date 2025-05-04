@@ -44,7 +44,7 @@ Follow these steps to set up the application locally:
 #### Clone the Repository
 
 ```bash
-git clone https://github.com/NeerajCodz/ObjectDetection.git
+git clone https://github.com/NeerajCodz/ObjectDetection
 cd ObjectDetection
 ```
 
@@ -136,7 +136,7 @@ The `app.py` script supports the following command-line arguments:
   - Example: `python app.py --enable-fastapi`
 - `--fastapi-port <port>`: Specify the port for the FastAPI server (default: 8000).
   - Example: `python app.py --enable-fastapi --fastapi-port 8001`
-- `--confidence-threshold <float-value)`: Confidence threshold for detection (Range: 0 - 1) (default: 8000).
+- `--confidence-threshold <float-value)`: Confidence threshold for detection (Range: 0 - 1) (default: 0.5).
   - Example: `python app.py --confidence-threshold 0.75`
 
 You can combine arguments:
@@ -228,7 +228,7 @@ To contribute or modify the application:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/NeerajCodz/ObjectDetection.git
+git clone https://github.com/NeerajCodz/ObjectDetection
 cd ObjectDetection
 ```
 
