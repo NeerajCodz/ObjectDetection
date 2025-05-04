@@ -81,19 +81,12 @@ If you prefer to use Docker to set up and run the application, follow these step
 
 - Docker installed on your machine. If you don’t have Docker, download and install it from [here](https://www.docker.com/get-started).
 
-#### Build the Docker Image
+#### Download the docker Image
 
-First, clone the repository (if you haven't already):
-
-```bash
-git clone https://github.com/NeerajCodz/ObjectDetection.git
-cd ObjectDetection
-```
-
-Now, build the Docker image:
+First, Pull the docker Image:
 
 ```bash
-docker build -t objectdetection:latest .
+docker pull neerajcodz/objectdetection:latest
 ```
 
 #### Run the Docker Container
@@ -101,10 +94,11 @@ docker build -t objectdetection:latest .
 Once the image is built, run the application using this command:
 
 ```bash
-docker run -p 5000:5000 objectdetection:latest
+docker run -d -p 8080:80 neerajcodz/objectdetection:latest
 ```
 
-This will start the application on port 5000. Open your browser and go to `http://localhost:5000` to access the FastAPI interface.
+This will start the application on port 8080. 
+Open your browser and go to `http://localhost:8080` to access the interface.
 
 ### 3. **Demo**
 
@@ -112,7 +106,7 @@ You can try the demo directly online through Hugging Face's Spaces:
 
 [Object Detection Demo](https://huggingface.co/spaces/NeerajCodz/ObjectDetection)
 
-## Using the API
+## Using the API (Instable)
 
 You can interact with the application via the FastAPI `/detect` endpoint to send images and get detection results.
 
