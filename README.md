@@ -1,54 +1,56 @@
 # 🚀 Object Detection with Transformer Models
 
-This project provides an object detection system using state-of-the-art transformer models, such as **DETR (DEtection TRansformer)** and **YOLOS (You Only Look One-level Series)**. The system can detect objects from uploaded images or image URLs, and it supports different models for detection and segmentation tasks. It includes a Gradio-based web interface and a FastAPI-based API for programmatic access.
+This project provides a robust object detection system leveraging state-of-the-art transformer models, including **DETR (DEtection TRansformer)** and **YOLOS (You Only Look One-level Series)**. The system supports object detection and panoptic segmentation from uploaded images or image URLs. It features a user-friendly **Gradio** web interface for interactive use and a **FastAPI** endpoint for programmatic access.
 
-You can try the demo online on Hugging Face: [Demo Link](https://huggingface.co/spaces/NeerajCodz/ObjectDetection).
+Try the online demo on Hugging Face Spaces: [Object Detection Demo](https://huggingface.co/spaces/NeerajCodz/ObjectDetection).
 
 ## Models Supported
 
-The following models are supported, as defined in the application:
+The application supports the following models, each tailored for specific detection or segmentation tasks:
 
 - **DETR (DEtection TRansformer)**:
-  - `facebook/detr-resnet-50`: DETR with ResNet-50 backbone for object detection. Fast and accurate for general use.
-  - `facebook/detr-resnet-101`: DETR with ResNet-101 backbone for object detection. More accurate but slower than ResNet-50.
-  - `facebook/detr-resnet-50-panoptic`(currently has bugs): DETR with ResNet-50 for panoptic segmentation. Detects objects and segments scenes.
-  - `facebook/detr-resnet-101-panoptic`(currently has bugs): DETR with ResNet-101 for panoptic segmentation. High accuracy for complex scenes.
+  - `facebook/detr-resnet-50`: Fast and accurate object detection with a ResNet-50 backbone.
+  - `facebook/detr-resnet-101`: Higher accuracy object detection with a ResNet-101 backbone, slower than ResNet-50.
+  - `facebook/detr-resnet-50-panoptic`: Panoptic segmentation with ResNet-50 (note: may have stability issues).
+  - `facebook/detr-resnet-101-panoptic`: Panoptic segmentation with ResNet-101 (note: may have stability issues).
   
 - **YOLOS (You Only Look One-level Series)**:
-  - `hustvl/yolos-tiny`: YOLOS Tiny model. Lightweight and fast, ideal for resource-constrained environments.
-  - `hustvl/yolos-base`: YOLOS Base model. Balances speed and accuracy for object detection.
+  - `hustvl/yolos-tiny`: Lightweight and fast, ideal for resource-constrained environments.
+  - `hustvl/yolos-base`: Balances speed and accuracy for object detection.
 
 ## Features
 
-- **Image Upload**: Upload images from your device for object detection via the Gradio interface.
-- **URL Input**: Input an image URL for detection through the Gradio interface or API.
+- **Image Upload**: Upload images via the Gradio interface for object detection.
+- **URL Input**: Provide image URLs for detection through the Gradio interface or API.
 - **Model Selection**: Choose between DETR and YOLOS models for detection or panoptic segmentation.
-- **Object Detection**: Detects objects and highlights them with bounding boxes and confidence scores.
-- **Panoptic Segmentation**: Some models (e.g., DETR panoptic variants) support detailed scene segmentation with colored masks.
-- **Image Properties**: Displays image metadata such as format, size, aspect ratio, file size, and color statistics.
-- **API Access**: Use the FastAPI endpoint `/detect` to programmatically process images and retrieve detection results.
+- **Object Detection**: Highlights detected objects with bounding boxes and confidence scores.
+- **Panoptic Segmentation**: Supports scene segmentation with colored masks (DETR panoptic models).
+- **Image Properties**: Displays metadata like format, size, aspect ratio, file size, and color statistics.
+- **API Access**: Programmatically process images via the FastAPI `/detect` endpoint.
+- **Flexible Deployment**: Run locally, in Docker, or in cloud environments like Google Colab.
 
 ## How to Use
 
-### 1. **Normal Git Clone Method**
+### 1. **Local Setup (Git Clone)**
 
 Follow these steps to set up the application locally:
 
 #### Prerequisites
 
 - Python 3.8 or higher
-- Install dependencies using `pip`
+- `pip` for installing dependencies
+- Git for cloning the repository
 
 #### Clone the Repository
 
 ```bash
-git clone https://github.com/NeerajCodz/ObjectDetection.git
+git clone https://github.com/NeerajCodz/ObjectDetection
 cd ObjectDetection
 ```
 
 #### Install Dependencies
 
-Install the required dependencies from `requirements.txt`:
+Install required packages from `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
@@ -56,34 +58,34 @@ pip install -r requirements.txt
 
 #### Run the Application
 
-Start the FastAPI server using uvicorn:
-
-```bash
-uvicorn objectdetection:app --reload
-```
-
-Alternatively, launch the Gradio interface by running the main script:
+Launch the Gradio interface:
 
 ```bash
 python app.py
 ```
 
+To enable the FastAPI server:
+
+```bash
+python app.py --enable-fastapi
+```
+
 #### Access the Application
 
-- For FastAPI: Open your browser and navigate to `http://localhost:8000` to use the API or view the Swagger UI.
-- For Gradio: The Gradio interface URL will be displayed in the console (typically `http://127.0.0.1:7860`).
+- **Gradio**: Open the URL displayed in the console (typically `http://127.0.0.1:7860`).
+- **FastAPI**: Navigate to `http://localhost:8000` for the API or Swagger UI (if enabled).
 
 ### 2. **Running with Docker**
 
-If you prefer to use Docker to set up and run the application, follow these steps:
+Use Docker for a containerized setup.
 
 #### Prerequisites
 
-- Docker installed on your machine. If you don’t have Docker, download and install it from [here](https://www.docker.com/get-started).
+- Docker installed on your machine. Download from [Docker's official site](https://www.docker.com/get-started).
 
-#### Download the docker Image
+#### Pull the Docker Image
 
-First, Pull the docker Image:
+Pull the pre-built image from Docker Hub:
 
 ```bash
 docker pull neerajcodz/objectdetection:latest
@@ -91,47 +93,115 @@ docker pull neerajcodz/objectdetection:latest
 
 #### Run the Docker Container
 
-Once the image is built, run the application using this command:
+Run the application on port 8080:
 
 ```bash
 docker run -d -p 8080:80 neerajcodz/objectdetection:latest
 ```
 
-This will start the application on port 8080. 
-Open your browser and go to `http://localhost:8080` to access the interface.
+Access the interface at `http://localhost:8080`.
+
+#### Build and Run the Docker Image
+
+To build the Docker image locally:
+
+1. Ensure you have a `Dockerfile` in the repository root (example provided in the repository).
+2. Build the image:
+
+```bash
+docker build -t objectdetection:local .
+```
+
+3. Run the container:
+
+```bash
+docker run -d -p 8080:80 objectdetection:local
+```
+
+Access the interface at `http://localhost:8080`.
 
 ### 3. **Demo**
 
-You can try the demo directly online through Hugging Face's Spaces:
+Try the demo on Hugging Face Spaces:
 
 [Object Detection Demo](https://huggingface.co/spaces/NeerajCodz/ObjectDetection)
 
-## Using the API (Instable)
+## Command-Line Arguments
 
-You can interact with the application via the FastAPI `/detect` endpoint to send images and get detection results.
+The `app.py` script supports the following command-line arguments:
 
-**Endpoint**: `/detect`
+- `--gradio-port <port>`: Specify the port for the Gradio UI (default: 7860).
+  - Example: `python app.py --gradio-port 7870`
+- `--enable-fastapi`: Enable the FastAPI server (disabled by default).
+  - Example: `python app.py --enable-fastapi`
+- `--fastapi-port <port>`: Specify the port for the FastAPI server (default: 8000).
+  - Example: `python app.py --enable-fastapi --fastapi-port 8001`
 
-**POST**: `/detect`
+You can combine arguments:
 
-**Parameters**:
-
-- `file`: (optional) Image file (must be of type `image/*`).
-- `image_url`: (optional) URL of the image.
-- `model_name`: (optional) Choose from `facebook/detr-resnet-50`, `hustvl/yolos-tiny`, etc.
-
-**Example Request Body**:
-
-```json
-{
-  "image_url": "https://example.com/image.jpg",
-  "model_name": "facebook/detr-resnet-50"
-}
+```bash
+python app.py --gradio-port 7870 --enable-fastapi --fastapi-port 8001
 ```
 
-**Response**:
+Alternatively, set the `GRADIO_SERVER_PORT` environment variable:
 
-The response includes a base64-encoded image with detections, detected objects, confidence scores, and unique objects with their scores.
+```bash
+export GRADIO_SERVER_PORT=7870
+python app.py
+```
+
+## Using the API
+
+**Note**: The FastAPI API is currently unstable and may require additional configuration for production use.
+
+The `/detect` endpoint allows programmatic image processing.
+
+### Running the FastAPI Server
+
+Enable FastAPI when launching the script:
+
+```bash
+python app.py --enable-fastapi
+```
+
+Or run FastAPI separately with Uvicorn:
+
+```bash
+uvicorn objectdetection:app --host 0.0.0.0 --port 8000
+```
+
+Access the Swagger UI at `http://localhost:8000/docs` for interactive testing.
+
+### Endpoint Details
+
+- **Endpoint**: `POST /detect`
+- **Parameters**:
+  - `file`: (optional) Image file (must be `image/*` type).
+  - `image_url`: (optional) URL of the image.
+  - `model_name`: (optional) Model name (e.g., `facebook/detr-resnet-50`, `hustvl/yolos-tiny`).
+- **Content-Type**: `multipart/form-data` for file uploads, `application/json` for URL inputs.
+
+### Example Requests
+
+#### Using `curl` with an Image URL
+
+```bash
+curl -X POST "http://localhost:8000/detect" \
+  -H "Content-Type: application/json" \
+  -d '{"image_url": "https://example.com/image.jpg", "model_name": "facebook/detr-resnet-50"}'
+```
+
+#### Using `curl` with an Image File
+
+```bash
+curl -X POST "http://localhost:8000/detect" \
+  -F "file=@/path/to/image.jpg" \
+  -F "model_name=facebook/detr-resnet-50"
+```
+
+### Response Format
+
+The response includes a base64-encoded image with detections and detection details:
 
 ```json
 {
@@ -143,14 +213,20 @@ The response includes a base64-encoded image with detections, detected objects, 
 }
 ```
 
+### Notes
+
+- Ensure only one of `file` or `image_url` is provided.
+- The API may experience instability with panoptic models; use object detection models for reliability.
+- Test the API using the Swagger UI for easier debugging.
+
 ## Development Setup
 
-If you'd like to contribute or modify the application:
+To contribute or modify the application:
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/NeerajCodz/ObjectDetection.git
+git clone https://github.com/NeerajCodz/ObjectDetection
 cd ObjectDetection
 ```
 
@@ -160,20 +236,37 @@ cd ObjectDetection
 pip install -r requirements.txt
 ```
 
-3. Run the FastAPI server or Gradio interface:
-
-```bash
-uvicorn objectdetection:app --reload
-```
-
-or
+3. Run the application:
 
 ```bash
 python app.py
 ```
 
-4. Open your browser and navigate to `http://localhost:8000` (FastAPI) or the Gradio URL (typically `http://127.0.0.1:7860`).
+Or run FastAPI:
+
+```bash
+uvicorn objectdetection:app --host 0.0.0.0 --port 8000
+```
+
+4. Access at `http://localhost:7860` (Gradio) or `http://localhost:8000` (FastAPI).
 
 ## Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests for bug fixes or new features on the [GitHub repository](https://github.com/NeerajCodz/ObjectDetection).
+Contributions are welcome! To contribute:
+
+1. Fork the repository.
+2. Create a feature or bugfix branch (`git checkout -b feature/your-feature`).
+3. Commit changes (`git commit -m "Add your feature"`).
+4. Push to the branch (`git push origin feature/your-feature`).
+5. Open a pull request on the [GitHub repository](https://github.com/NeerajCodz/ObjectDetection).
+
+Please include tests and documentation for new features. Report issues via GitHub Issues.
+
+## Troubleshooting
+
+- **Port Conflicts**: If port 7860 is in use, specify a different port with `--gradio-port` or set `GRADIO_SERVER_PORT`.
+- **Colab Issues**: Use the `--gradio-port` argument or environment variable to avoid port conflicts in Google Colab.
+- **Panoptic Model Bugs**: Avoid `detr-resnet-*-panoptic` models until stability issues are resolved.
+- **API Instability**: Test with smaller images and object detection models first.
+
+For further assistance, open an issue on the [GitHub repository](https://github.com/NeerajCodz/ObjectDetection).
